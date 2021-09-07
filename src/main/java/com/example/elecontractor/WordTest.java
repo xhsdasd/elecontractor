@@ -10,23 +10,19 @@ import org.docx4j.jaxb.Context;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPartAbstractImage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
-import org.docx4j.org.apache.poi.util.IOUtils;
 import org.docx4j.wml.*;
 
 import javax.xml.bind.JAXBElement;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WordTest {
     public static void main(String[] args) throws Exception {
-        String wordFilePath = "C:\\Users\\hylerp\\Desktop\\test.docx";
+        String wordFilePath = "C:\\Users\\Administrator\\Desktop\\test.docx";
         WordprocessingMLPackage wordMLPackage = load(wordFilePath);
-
         // 提取正文
         MainDocumentPart main = wordMLPackage.getMainDocumentPart();
         Document doc = main.getContents();
@@ -62,16 +58,16 @@ public class WordTest {
 
 
 
-        String imagePath = "D:\\1630996846229.png";
+        String imagePath = "C:\\Users\\Administrator\\Desktop\\test2.png";;
 
         byte bytes[] = FileUtils.readFileToByteArray(new File(imagePath));
 
         BinaryPartAbstractImage imagePart = BinaryPartAbstractImage.createImagePart(wordMLPackage, bytes);
 
 
-//        Anchor inline = imagePart.createImageAnchor(filenameHint, altText, xId, yId, false, posH, posV);
-        Inline inline2 = imagePart.createImageInline(filenameHint, altText, xId, yId,false,0);
-        drawing.getAnchorOrInline().set(0, inline2);
+        Anchor inline = imagePart.createImageAnchor(filenameHint, altText, xId, yId, false, posH, posV);
+//        Inline inline2 = imagePart.createImageInline(filenameHint, altText, xId, yId,false,0);
+        drawing.getAnchorOrInline().set(0, inline);
 
 
         //需要替换的map
@@ -96,7 +92,7 @@ public class WordTest {
 //            }
 //        }
 
-        save(wordMLPackage,wordFilePath);
+        save(wordMLPackage,"C:\\Users\\Administrator\\Desktop\\test2.docx");
     }
 
     public static void addImage(WordprocessingMLPackage wPackage,CTBookmark bm) throws Exception{
